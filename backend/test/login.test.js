@@ -26,7 +26,7 @@ describe("Login service", () => {
   });
 
   before("Cleaning DB", async () => {
-    await db.collection("users").deleteMany();
+    //  await db.collection("users").deleteMany();
     await db.collection("users").insertOne(this.userData2);
   });
 
@@ -47,12 +47,38 @@ describe("Login service", () => {
         .request(app)
         .post("/users/login")
         .send({
-          email: this.userData1.email,
-          password: this.userData1.password
+          email: "test@test.com",
+          password: "test"
         });
 
       res.status.should.equal(200);
-      res.body.data.should.have("data");
+      res.body.should.have.property("accessToken");
+      res.body.should.have.property("user");
+
+      res.body.user.email.should.equal("test@test.com");
+      this.user = res.body.user;
+      this.token = res.body.accessToken;
+      describe("Then user attempts to get offers", () => {
+        it("should return OK and the offers", async () => {
+          const res = await chai
+            .request(app)
+            .get(`/users/${this.user._id}/offer`)
+            .set("authorization", this.token);
+
+          res.status.should.equal(200); //testing with zero offers
+        });
+        describe("Then user with wrong/expired token attempts to get offers", () => {
+          it("should return 401", async () => {
+            this.token += "==";
+            const res = await chai
+              .request(app)
+              .get(`/users/${this.user._id}/offer`)
+              .set("authorization", this.token);
+
+            res.status.should.equal(401);
+          });
+        });
+      });
     });
   });
 

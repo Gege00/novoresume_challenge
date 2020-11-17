@@ -20,15 +20,18 @@ const generateAccessToken = (id) => {
 }
 
 const authenticateToken = (req, res, next) => {
-    // Hint: This is where you need to verify the JWT
-    // Hint: You will see this function being passed to authenticated action routes in code. See backend/routes/users.js to explore
-    let authenticated = false;
-    let token = req.headers
 
-    if(!authenticated) res.status(401)
+try {
+  let token = req.headers.authorization;
+  const authenticated = jwt.verify(token, process.env.TOKEN_SECRET)
+  if(!authenticated) throw new Error("Authentication issue!")
+  next();
+} catch (e) {
+    return res.status(401).send(e.message)
+}
 
 
-    next();
+
 }
 
 
