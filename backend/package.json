@@ -7,7 +7,7 @@
     "test": "test"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha"
   },
   "repository": {
     "type": "git",
@@ -27,10 +27,22 @@
     "express": "^4.17.1",
     "fs": "0.0.1-security",
     "jsonwebtoken": "^8.5.1",
-    "mongodb": "^3.6.2",
+    "mongodb": "^3.6.3",
     "wkhtmltopdf": "^0.3.4"
   },
   "devDependencies": {
-    "nodemon": "^2.0.4"
+    "chai": "^4.2.0",
+    "chai-http": "^4.3.0",
+    "faker": "^5.1.0",
+    "mocha": "^8.2.1",
+    "nodemon": "^2.0.6",
+    "request": "^2.88.2",
+    "sinon": "^9.2.1"
+  },
+  "mocha": {
+    "timeout": "2000",
+    "reporter": "nyan",
+    "spec": "./test/*.test.js",
+    "paraller": false
   }
 }
