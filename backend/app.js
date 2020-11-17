@@ -21,7 +21,15 @@ const server = https.createServer({
     cert: fs.readFileSync('./certificates/public.cert')
 }, app).listen(PORT, () => console.log(`Server is listening on port ${PORT}!`));
 
-module.exports = app;
+module.exports = {app,server};
+
+
+server.on("close", ()=>{
+    console.log("HTTP server is closed")
+    process.exit(0)
+
+
+})
 
 // If there is an unhandled promise rejection, we throw it and let the uncaughtException handler handle it
 process.on('unhandledRejection', reason => {
@@ -50,6 +58,3 @@ process.on('SIGTERM', () => {
         process.exit(0);
     });
 });
-
-
-
