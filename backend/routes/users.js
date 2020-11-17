@@ -7,9 +7,10 @@ const wkhtmltopdf = require('wkhtmltopdf');
 
 users.get('/', async (req, res, next) => {
     try {
+
         const users = await operations.getAllUsers();
         if (users instanceof Error) throw users;
-        res.send(users);
+        return res.send(users);
     } catch (error) {
         res.send(500);
     }
@@ -20,19 +21,20 @@ users.post('/register', async (req, res, next) => {
         const result = await operations.register(req.body);
         if (result === 409) return res.sendStatus(409);
         if (result instanceof Error) throw result;
-        res.send(result);
+        return res.send(result);
     } catch (error) {
-        res.sendStatus(500);
+        return res.status(500).send(error.message);
     }
 });
 
 users.post('/login', async (req, res, next) => {
     try {
         const result = await operations.login(req.body);
-        if (result instanceof Error) throw result;
-        res.send(result);
+
+        if (result instanceof Error) throw result
+        return res.send(result);
     } catch (error) {
-        res.sendStatus(500);
+          return res.status(500).send(error.message);
     }
 });
 

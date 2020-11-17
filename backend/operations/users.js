@@ -34,10 +34,21 @@ module.exports = {
 
     async login (userData) {
         try {
-            // Hint: See register() function
-            // Hint: Call generateAccessToken() here
+            const user = (await mongodb.collection('users').find({ "email": userData.email }).toArray())[0];
 
-            return 200;
+            if(!user) throw new Error("Incorrect username/password");
+
+            const valid=await bcrypt.compare(userData.password,user.password);
+
+            if(valid==false) throw new Error("Incorrect username/password");
+            delete user.password
+            const token=generateAccessToken(userData.email)
+            return {
+              data:{
+                  user:{user},
+                  accessToken: token
+              }
+            }
         } catch (error) {
             return error;
         }
