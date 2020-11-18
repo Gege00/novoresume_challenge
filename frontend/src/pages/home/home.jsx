@@ -1,20 +1,8 @@
-import React, { Component, Fragment } from "react";
-import "./home.scss";
-import { Grid, Typography, Container } from "@material-ui/core";
+import React, { Component, Fragment } from 'react';
+import './home.scss';
+import { Grid, Typography} from '@material-ui/core';
 
 export default class Home extends Component {
-  state = {
-    showLogin: false,
-    showSignUp: false
-  };
-
-  openLogin = open => {
-    this.setState({ showLogin: open });
-  };
-
-  openSignUp = open => {
-    this.setState({ showSignUp: open });
-  };
 
   render() {
     return (
@@ -149,7 +137,8 @@ export default class Home extends Component {
         }
 
         <div className="container promotion">
-          <h4 style={{ padding: "32px 0", fontWeight: "bold" }}>
+          {/*missing icon should go here*/}
+          <h4 >
             What do we do?
           </h4>
           <Grid container spacing={3}>
