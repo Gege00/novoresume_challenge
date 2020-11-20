@@ -59,12 +59,9 @@ module.exports = {
       if (valid == false) throw new Error("Incorrect username/password");
       delete user.password;
       const token = generateAccessToken(userData.email);
-      let data = {
-        accessToken: token
-      };
 
-      Object.assign(data, { user });
-      return data;
+
+      return {token,user}
     } catch (error) {
       return error;
     }

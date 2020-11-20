@@ -1,6 +1,13 @@
 import React, { Component, Fragment } from 'react';
 import { Redirect } from 'react-router-dom';
+import { renderToString } from 'react-dom/server'
+
 import { toast } from 'react-toastify';
+
+import BillingInfo from './billing.jsx'
+
+import {saveAs} from 'file-saver'
+
 
 import { getAllItems, saveBillingInfo, saveProducts, generatePdf } from '../../calls/calls';
 import './offers.scss';
@@ -119,9 +126,22 @@ export default class Offers extends Component {
     };
 
     generateOffer = () => {
-        const html = `<html><span>Example PDF text</span></html>`;
 
-        // Hint: Use the generatePdf(userId, html) function here from frontend/src/calls/calls.js
+        const html =renderToString(<BillingInfo billingInfo= {this.state.billingInfo} products={this.state.products} /> )
+
+        generatePdf(localStorage.getItem('userId'), html)
+        .then(response=>{
+
+          const blob = new Blob([response.data],{type: "application/pdf"});
+          saveAs(blob,"billingInfo.pdf")
+
+          toast.success('Here is your goddamn pdf xoxo' )
+        })
+        .catch(error=>{
+          console.log(error)
+            toast.error("There was an error. Please try again")
+        })
+
     };
 
     render() {
@@ -141,8 +161,10 @@ export default class Offers extends Component {
                             </div>
                         </div>
                     </section>
+
                 </div>
                 <br></br>
+
             </Fragment>
         ) : (
             <Redirect to={{ pathname: '/' }} />

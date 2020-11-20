@@ -1,3 +1,23 @@
+
+# Checklist
+
+1. First Task:  ✔️
+   To run the test : ``` npm test ```
+   I used Mocha + Chai.
+
+2. Second Task: ✔️
+   Implemented and tested.
+
+3. Third Task : ❌
+   The client send the html to the backend and it generates the PDF. However, the wkhtmltopdf doesn't support neither flex nor grid layout. I had some difficult time to play with the CSS. I figured it out the library supports only webkit-box. The problem was to generate the items from the product list. The generated PDF is half-done and does not look like the mockup.\*sadface\*
+
+4. Fourth task: ✔️
+   The Landing Page is done.
+
+
+
+
+
 # Novorésumé Challenge
 
 Should you accept the challenge, we want you to complete 4 tasks based on the provided mock-ups. You can find the mock-ups in the **mockups** folder, and the image assets in **frontend/public/images**. In the project, you have some functionalities already implemented such as register, save products, save billing info. To reach the logged in page though, you need to achieve your second task. You can explore what functionalities you have under backend/operations. The project doesn't have any unit tests implemented, but we want to see your approach to [BDD](https://en.wikipedia.org/wiki/Behavior-driven_development) while developing (task 1).
@@ -39,7 +59,7 @@ In the frontend folder, run:
 npm start
 ```
 
-The app now should be running on https://localhost:3000. 
+The app now should be running on https://localhost:3000.
 
 #### *To run the app with Docker:*
 
